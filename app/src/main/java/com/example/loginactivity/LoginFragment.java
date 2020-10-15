@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -29,19 +31,37 @@ private Button loginButton ; //登录按钮
 
 
     @Override
+    //这里面不能加载控件，因为控件还未被初始化，要至少在onviewcreate（）里初始化控件。
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
     }
 
     @Override
+    //控件也不能再这里初始化
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        View view= inflater.inflate(R.layout.fragment_login, container, false);
+        return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    //从这个生命周期开始就能初始化控件了。
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        init();
+    }
 
     @Override
     public void onResume() {
