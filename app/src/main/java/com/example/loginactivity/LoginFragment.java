@@ -1,7 +1,10 @@
 package com.example.loginactivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 
 public class LoginFragment extends Fragment {
@@ -23,7 +27,7 @@ private Button loginButton ; //登录按钮
     private RadioButton radioButton ; //记住密码按钮
     private EditText userNumEdit ; //输入账户控件。
     private EditText userPasswordEdit ;//输入密码控件
-
+    private Boolean  IS_CHECKED =true ;
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -67,6 +71,7 @@ private Button loginButton ; //登录按钮
     public void onResume() {
         super.onResume();
 
+        //这里是主事件逻辑处
         //点击登录按钮
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +79,11 @@ private Button loginButton ; //登录按钮
                 String userNum = getUserNum();
                 String userPassword = getUserPassword();
                 //点击后与数据库里的用户进行匹配。
-                //未写
-
-                //是否保存账号密码的操作
-                rememberUser(userNum,userPassword);
+                if(selectUser(userNum,userPassword)){
+                    //是否保存账号密码的操作
+                    rememberUser(userNum,userPassword);
+                }
+                else Toast.makeText(getContext(), "密码错误", Toast.LENGTH_SHORT).show();
             }
         });
         //点击注册按钮
@@ -90,7 +96,14 @@ private Button loginButton ; //登录按钮
             }
         });
 
-
+        //设解决单选框的重复点击只能时true的bug。
+    radioButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            radioButton.setChecked(IS_CHECKED);
+            IS_CHECKED=!IS_CHECKED;
+        }
+    });
 
 
     }
@@ -107,12 +120,13 @@ private Button loginButton ; //登录按钮
     }
     //判断有没有记住的账号密码
     private void isRemember(){
-        if( getActivity().getSharedPreferences("isHaveRemberUser",0).getInt("isRemember",0)==1);
+        if( getActivity().getSharedPreferences("isHaveRemberUser", Context.MODE_PRIVATE).getInt("isRemember",0)==1);
         {
             String usernum = getActivity().getSharedPreferences("isHaveRemberUser",0).getString("usernum","");
             String userpassword = getActivity().getSharedPreferences("isHaveRemberUser",0).getString("userpassword","");
             userNumEdit.setText(usernum);
             userPasswordEdit.setText(userpassword);
+//            Toast.makeText(getContext(), usernum+"+"+userpassword, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -133,10 +147,43 @@ private Button loginButton ; //登录按钮
     private void rememberUser(String userNum,String userPassword){
         //如果记住密码
         if(getIsRemember()){
-            SharedPreferences.Editor editor = getActivity().getSharedPreferences("isHaveRemberUser",0).edit();
+            SharedPreferences.Editor editor = getActivity().getSharedPreferences("isHaveRemberUser",Context.MODE_PRIVATE).edit();
             editor.putString("usernum",userNum);
             editor.putString("userpassword",userPassword);
+            editor.apply();//这里忘记申请了
+//            Toast.makeText(getContext(), "账号密码保存成功"+userNum+"/"+userPassword, Toast.LENGTH_SHORT).show();
         }
+        else {
+            SharedPreferences.Editor editor = getActivity().getSharedPreferences("isHaveRemberUser",Context.MODE_PRIVATE).edit();
+            editor.putString("usernum","");
+            editor.putString("userpassword","");
+            editor.apply();//这里忘记申请了
+            //Toast.makeText(getContext(), "账号密码保存成功"+userNum+"/"+userPassword, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    //用原生的sql语句判断用户账号密码是否正确。
+    private Boolean selectUser(String usernum,String userpassword){
+        UserDBHelper userDBHelper = new UserDBHelper(getContext(),"User",null,1);
+        SQLiteDatabase db = userDBHelper.getWritableDatabase();
+        String SELECT_USER = "select  userpassword  from User Where usernum = \""+usernum+"\"";
+        Cursor cursor =  db.rawQuery(SELECT_USER,null);
+        if( cursor.moveToFirst()){
+            //第一条数据就是用户的数据
+            String tem_userpassword = cursor.getString(cursor.getColumnIndex("userpassword"));
+            if (userpassword.equals(tem_userpassword))
+            {
+                Toast.makeText(getContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                return true;
+            }else{
+                Toast.makeText(getContext(), "密码错误", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+        }
+        Toast.makeText(getContext(), "账号未注册", Toast.LENGTH_SHORT).show();
+        return  false ;
     }
 
 
