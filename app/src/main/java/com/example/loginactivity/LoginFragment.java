@@ -82,6 +82,9 @@ private Button loginButton ; //登录按钮
                 if(selectUser(userNum,userPassword)){
                     //是否保存账号密码的操作
                     rememberUser(userNum,userPassword);
+                    Intent intent = new Intent(getContext(),ShareActivity.class);
+                    intent.putExtra("usernum",userNum);
+                    startActivity(intent);
                 }
                 else Toast.makeText(getContext(), "密码错误", Toast.LENGTH_SHORT).show();
             }
