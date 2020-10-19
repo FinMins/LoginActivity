@@ -11,3 +11,4 @@
 9. onDestroyView():当Fragment中的视图被移除时调用。
 10. onDestroy()：不在使用fragment时调用，但fragment任然附加再activity上，可以被找到，但是不能执行其他操作。.
 11. onDetach（）：在Fragment和Activity取消关联时调用，这个方法调用后，fragment与activity不再绑定。。
+12. 对比activity生命周期：actvivity的onCreate()变->onAttach()-.onCreate(),onCreateView(),onActivityCreate()，也就是先建立连接，再建立碎片。在建立视图，再加载活动。而onDestroy()变成了->onDestroyVIew(),onDestroy()和onDetach().也就是先破坏界面，再破坏碎片，再破坏连接。成对称关系。

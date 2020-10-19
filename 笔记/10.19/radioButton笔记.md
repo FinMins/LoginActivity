@@ -1,0 +1,1 @@
+1. android:drawableTop ="@android:drawable/图片"可以把图片放在文字的上方。
