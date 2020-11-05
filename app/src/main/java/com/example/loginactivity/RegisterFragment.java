@@ -61,7 +61,7 @@ public class RegisterFragment extends Fragment {
              Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
              getActivity().finish();
          };
-                Toast.makeText(getContext(), "注册失败", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "注册失败", Toast.LENGTH_SHORT).show();
 
             }
         });

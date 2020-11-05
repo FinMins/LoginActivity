@@ -2,9 +2,12 @@ package com.example.loginactivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,7 +39,6 @@ public class ShareActivity extends AppCompatActivity  implements View.OnClickLis
     private RelativeLayout secondItem ;
     private RelativeLayout thirdItem ;
     private TextView title ;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,7 @@ public class ShareActivity extends AppCompatActivity  implements View.OnClickLis
     }
 
     private void init(){
-        inflater = getLayoutInflater();
+//        inflater = getLayoutInflater();
         title = findViewById(R.id.titleTop);
         fragments = new ArrayList<>();
         fragments.add(new NewsFragment());
@@ -103,9 +105,6 @@ public class ShareActivity extends AppCompatActivity  implements View.OnClickLis
                 myViewPager.setCurrentItem(2);
                 setColor(2);
                 break;
-
-
-
         }
     }
 

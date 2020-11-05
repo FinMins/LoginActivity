@@ -4,7 +4,7 @@
 2. 创建过程：
    	1.  在activity界面里写入viewpager控件。
     	2. 创建所有需要的fragment布局.xml。
-    	3. 创建一个Viewpager适配器adapter。
+    	3. 创建一个Viewpager适配器adapter（有pageradapterdapter,fragmentPageradapter,fragmentStatePagerAdapter三种)。
     	4. 在activity里把viewpager适配器填充好(fragmentmannger,fragmentlist,0)。
     	5. viewpager.setadapter(adapter).
 

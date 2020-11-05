@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="请输入注册密码"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline9"

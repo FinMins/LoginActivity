@@ -22,11 +22,13 @@
 
    2.3 只有<action>和<catgory>同时匹配intent中指定的action和category时，才能响应该intent。一个intent-filter只能有一个action。但是可以有多个catgory.
 
-   2.4
+   2.4使用：new Intent ("com.example.activitytest.ACTIVITY_START");
+
+   ​	intent.addCategory("com.example.ativitest.MY_CATEGORY");
 
    
 
    
-
+   
    
 

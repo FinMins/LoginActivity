@@ -1,7 +1,7 @@
 # Fragment生命周期
 
 1. onAttach(Context context)：在Fragment和Activity建立关联时调用（可以理解为Activity要先敲下门才能被创建)，这个回调函数可以使fragment获取activity要传过来的参数。（（Activity类名)context).Activity里的方法。
-2. onCreate(Bundle savedInstanceState):调用这个方法时还未收到ctivity的oncreate(已完成的通知。
+2. onCreate(Bundle savedInstanceState):调用这个方法时还未收到activity的oncreate(已完成的通知。
 3. onCreateView():当Fragment创建视图时被调用。
 4. onActivityCreated()：在相关联的Activity的onCreate()方法调用后调用。这是在用户看到用户界面之前可对用户界面执行的最后调整的地方。
 5. onStart():同Activity.

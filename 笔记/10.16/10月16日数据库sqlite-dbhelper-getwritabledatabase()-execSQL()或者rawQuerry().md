@@ -10,3 +10,6 @@
 7. 使用sdk原生方法来操作cursor:
    * ContentValues:一个容器，里面存数据。new ContentValues values ;调用values.put("key",value)来存储数据，一行的数据输入完后调用db.insert("表名",null,values)来将一行数据存进去，然后用values.clear()来清空容器，重复上述步骤录入下一行。***注意,puth后面无需加数据类别，如string,int等***)
    * 更新数据update:db.update("表名",values,"name=?",new String[] {"约束"}) 参数3为where 参数4为?的值。注意为Sring[].
+   * 删除数据：同上：db.delete("表名"，“page > ? ,name = ?",new String[] {"20","BookName"});
+   * 查询数据：Cursor cursor = db.query(1:"表名",2:"哪列",3:"name = ?,page >?",4:new String[] {"Book","20" },5:groupby按某列分组，having过滤操作，orderby column1,2排列)。
+
