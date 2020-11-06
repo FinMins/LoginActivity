@@ -13,19 +13,16 @@ import android.os.IBinder;
 import androidx.core.app.NotificationCompat;
 
 public class MyService extends Service {
-
     NotificationChannel notificationChannel = null;
     String CHANNEL_ONE_ID = "CHANNEL_ONE_ID";
     String CHANNEL_ONE_NAME= "CHANNEL_ONE_ID";
     public MyService() {
     }
-
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -37,7 +34,6 @@ public class MyService extends Service {
 //                .build();
 //        startForeground(1,notification);
     }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -50,8 +46,6 @@ public class MyService extends Service {
             NotificationManager manager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             manager.createNotificationChannel(notificationChannel);
         }
-
-
       Intent intent1 = new Intent(this,MainActivity.class);
       PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
 Notification notification = new NotificationCompat.Builder(this).setChannelId("CHANNEL_ONE_ID")
@@ -64,7 +58,5 @@ Notification notification = new NotificationCompat.Builder(this).setChannelId("C
         notification.flags|= Notification.FLAG_NO_CLEAR;
 startForeground(1,notification);
         return super.onStartCommand(intent, flags, startId);
-
-
   }
 }
